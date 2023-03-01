@@ -1,5 +1,6 @@
 from datetime import date
 from io import BytesIO
+from logging import getLogger
 from pathlib import Path
 
 import fitz
@@ -10,13 +11,20 @@ OUTPUT_LOCATION = "frontpage"
 OUTPUT_NAME = "nyt.png"
 DPI = 800
 
+log = getLogger(__name__)
+
 
 class FrontPageProcessor:
     def __call__(self):
         today = date.today()
 
+        log.info("assuring output location.")
         self.assure_output_location()
+
+        log.info("fetching frontpage")
         stream: BytesIO = self.fetch_frontpage(today)
+
+        log.info("saving frontpage")
         self.save_frontpage(stream)
 
     def assure_output_location(self) -> None:

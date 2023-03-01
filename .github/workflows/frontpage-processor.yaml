@@ -24,7 +24,7 @@ jobs:
         with:
           no_dev: true
 
-      - name: Deploy
+      - name: Fetch and process frontpage
         run: poetry run process
 
       - name: Commit frontpage
