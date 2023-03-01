@@ -40,7 +40,7 @@ class FrontPageProcessor:
 
     def save_frontpage(self, stream: BytesIO) -> None:
         with fitz.open(stream=stream, filetype="pdf") as pdf_doc:
-            image = pdf_doc.get_page_pixmap(0)
+            image = pdf_doc.get_page_pixmap(0, matrix=fitz.Matrix(2, 2))
             image.save(f"{OUTPUT_LOCATION}/{OUTPUT_NAME}")
 
 
