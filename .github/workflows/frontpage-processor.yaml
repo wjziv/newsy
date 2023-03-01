@@ -31,5 +31,8 @@ jobs:
         run: |
           git config --global user.name 'Walter'
           git config --global user.email 'walterzielenski@gmail.com'
-          git commit -am "Updated Frontpage"
+          git add .
+          git commit -m "Updated Frontpage"
           git push
+        env:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
