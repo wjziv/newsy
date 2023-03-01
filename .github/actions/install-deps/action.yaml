@@ -1,0 +1,41 @@
+name: Install dependencies
+description: Install dependencies
+inputs:
+  no_dev:
+    description: "Passes the --no-dev flag to `poetry install` if true"
+    type: boolean
+    default: false
+    required: false
+runs:
+  using: composite
+  steps:
+    - name: Setup python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.9"
+
+    - name: Install poetry
+      run: curl -sSL https://install.python-poetry.org | python
+      env:
+        POETRY_VERSION: 1.3.2
+      shell: bash
+
+    - name: Add poetry to path
+      run: echo "/home/runner/.local/bin/" >> $GITHUB_PATH
+      shell: bash
+
+    - name: Load poetry cache
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.9"
+        cache: poetry
+
+    - if: ${{ inputs.no_dev == 'false' }}
+      name: Install all dependencies
+      run: poetry install
+      shell: bash
+
+    - if: ${{ inputs.no_dev == 'true' }}
+      name: Install only non-dev dependencies
+      run: poetry install --no-dev
+      shell: bash

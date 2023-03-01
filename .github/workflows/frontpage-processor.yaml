@@ -1,0 +1,35 @@
+name: Frontpage Processor
+on:
+  schedule:
+    - cron: "0 8 * * *"  # 8AM UTC
+
+  # DEBUG
+  push:
+    branches:
+    - master
+
+jobs:
+  master-branch-build:
+    runs-on:
+      labels: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Add workspace to path
+        run: echo $GITHUB_WORKSPACE >> $GITHUB_PATH
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-deps
+        with:
+          no_dev: true
+
+      - name: Deploy
+        run: poetry run process
+
+      - name: Commit frontpage
+        run: |
+          git config --global user.name 'Walter'
+          git config --global user.email 'walterzielenski@gmail.com'
+          git commit -am "Updated Frontpage"
+          git push
