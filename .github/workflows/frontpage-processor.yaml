@@ -27,6 +27,7 @@ jobs:
       - name: Fetch and process frontpage
         run: poetry run process
 
+      # Should not commit if there is no update...
       - name: Commit frontpage
         run: |
           git config --global user.name 'Walter'

@@ -1,6 +1,5 @@
 from datetime import date
 from io import BytesIO
-from logging import getLogger
 from pathlib import Path
 
 import fitz
@@ -9,22 +8,20 @@ import httpx
 NYT_FRONTPAGE_URL = "https://static01.nyt.com/images/{year_month_day}/nytfrontpage/scan.pdf"
 OUTPUT_LOCATION = "frontpage"
 OUTPUT_NAME = "nyt.png"
-DPI = 800
-
-log = getLogger(__name__)
+DPI = 300
 
 
 class FrontPageProcessor:
     def __call__(self):
         today = date.today()
 
-        log.info("assuring output location.")
+        print("assuring output location.")
         self.assure_output_location()
 
-        log.info("fetching frontpage")
+        print("fetching frontpage")
         stream: BytesIO = self.fetch_frontpage(today)
 
-        log.info("saving frontpage")
+        print("saving frontpage")
         self.save_frontpage(stream)
 
     def assure_output_location(self) -> None:
@@ -43,11 +40,10 @@ class FrontPageProcessor:
 
     def save_frontpage(self, stream: BytesIO) -> None:
         with fitz.open(stream=stream, filetype="pdf") as pdf_doc:
-            frontpage = pdf_doc[0]  # there is only one page
-            image = frontpage.get_pixmap(dpi=DPI)  # grayscale desired.
+            image = pdf_doc.get_page_pixmap(0)
             image.save(f"{OUTPUT_LOCATION}/{OUTPUT_NAME}")
 
 
 processor = FrontPageProcessor()
 
-processor()
+processor
