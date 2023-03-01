@@ -6,7 +6,7 @@ authors = ["Walter Zielenski <wzielenski@project44.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.9"
 pymupdf = "^1.21.1"
 httpx = "^0.23.3"
 
