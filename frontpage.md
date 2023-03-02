@@ -1,1 +1,0 @@
-![Frontpage](./frontpage/nyt.png)

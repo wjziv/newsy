@@ -45,5 +45,3 @@ class FrontPageProcessor:
 
 
 processor = FrontPageProcessor()
-
-processor
