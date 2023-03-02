@@ -1,7 +1,7 @@
 name: Frontpage Processor
 on:
   schedule:
-    - cron: "0 8 * * *"  # 8AM UTC
+    - cron: "0 9 * * *"  # 9AM UTC
 
   # DEBUG
   push:
