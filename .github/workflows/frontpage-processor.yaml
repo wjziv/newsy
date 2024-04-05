@@ -30,7 +30,7 @@ jobs:
       # Should not commit if there is no update...
       - name: Commit frontpage
         run: |
-          git config --global user.name 'Walter'
+          git config --global user.name 'daily-job'
           git config --global user.email 'walterzielenski+bot@gmail.com'
           git add .
           git commit -m "Updated Frontpage"
